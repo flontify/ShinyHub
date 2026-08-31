@@ -7,7 +7,15 @@ local webhookUrl = ""
 local autoWebhook = false
 local autoWebhookInterval = 60
 
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Rayfield
+local ok = pcall(function()
+    Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))() or loadfile("Rayfield.lua")   
+ end)
+if not ok or not Rayfield then
+    Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/SiriusSoftwareLtd/Rayfield/main/source.lua'))()
+end
+assert(Rayfield, "Rayfield failed to load - enable Http Requests in executor")
+
 local window = Rayfield:CreateWindow({
     Name = "ShinyHub | JustGolf",
     LoadingTitle = "ShinyHub",
