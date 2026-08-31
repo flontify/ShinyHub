@@ -9,38 +9,41 @@ local autoWebhookInterval = 60
 
 local Rayfield
 pcall(function() Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() end)
-if not Rayfield then pcall(function() Rayfield = loadstring(game:HttpGet("https://sirius.menu/rayfield"))() end) end
-if not Rayfield then pcall(function() Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/SiriusSoftwareLtd/Rayfield/main/source.lua"))() end) end
-if not Rayfield and isfile and isfile("rayfield.lua") then pcall(function() Rayfield = loadstring(readfile("rayfield.lua"))() end) end
+if not Rayfield and isfile and isfile("rayfield.lua") then
+    pcall(function() Rayfield = loadstring(readfile("rayfield.lua"))() end)
+end
 if not Rayfield and writefile then
     local ok, src = pcall(function() return game:HttpGet("https://sirius.menu/gen2") end)
-    if ok and src and src:len() > 1000 then pcall(function() writefile("rayfield.lua", src) end) pcall(function() Rayfield = loadstring(src)() end) end
+    if ok and src and src:len() > 1000 then
+        pcall(function() writefile("rayfield.lua", src) end)
+        pcall(function() Rayfield = loadstring(src)() end)
+    end
 end
 assert(Rayfield, "Rayfield failed to load - enable Http Requests")
 
 local window
 local okWin = pcall(function()
     window = Rayfield:CreateWindow({
-        Name = "ShinyHub | JustGolf",
+        Name = "ShinyHub | Hit A Golf Ball",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "by you",
         Theme = "Amoled",
         ToggleUIKeybind = "K",
         DisableRayfieldPrompts = false,
         DisableBuildWarnings = false,
-        ConfigurationSaving = {Enabled = true, FolderName = "ShinyHub", FileName = "JustGolf"}
+        ConfigurationSaving = {Enabled = true, FolderName = "ShinyHub", FileName = "Hit A Golf Ball"}
     })
 end)
 if not okWin or not window then
     window = Rayfield:CreateWindow({
-        Name = "ShinyHub | JustGolf",
+        Name = "ShinyHub | Hit A Golf Ball",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "by you",
         Theme = "Default",
         ToggleUIKeybind = "K",
         DisableRayfieldPrompts = false,
         DisableBuildWarnings = false,
-        ConfigurationSaving = {Enabled = true, FolderName = "ShinyHub", FileName = "JustGolf"}
+        ConfigurationSaving = {Enabled = true, FolderName = "ShinyHub", FileName = "Hit A Golf Ball"}
     })
 end
 
@@ -68,7 +71,7 @@ local function sendProgress()
     if webhookUrl == "" or webhookUrl:len() < 10 then Rayfield:Notify({Title = "Webhook", Content = "Set your webhook URL first!", Duration = 3}) return end
     local player = game:GetService("Players").LocalPlayer
     local coins = getCoins()
-    local payload = {embeds = {{title = player.Name .. "'s Progress", color = 0x8A2BE2, fields = {{name = "Coins", value = tostring(coins), inline = true},{name = "Game", value = "JustGolf", inline = true}}, timestamp = DateTime.now():ToIsoDate()}}}
+    local payload = {embeds = {{title = player.Name .. "'s Progress", color = 0x8A2BE2, fields = {{name = "Coins", value = tostring(coins), inline = true},{name = "Game", value = "Hit A Golf Ball", inline = true}}, timestamp = DateTime.now():ToIsoDate()}}}
     local json = HttpService:JSONEncode(payload)
     local req = (http_request or request or (syn and syn.request) or (fluxus and fluxus.request))
     if req then pcall(function() req({Url = webhookUrl, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = json}) end) Rayfield:Notify({Title = "Webhook", Content = "Progress sent! Coins: "..tostring(coins), Duration = 2}) end
