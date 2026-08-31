@@ -2,18 +2,15 @@ if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
-local BASE = 'https://raw.githubusercontent.com/Flontify/ShinyHub/main/games/'
+local BASE = 'https://raw.githubusercontent.com/flontify/ShinyHub/refs/heads/main/games/'
 
 local games = {
-    
-    [75985787756573] = 'hitagolfball.lua', -- rainbow
-    [108998593243033] = 'hitagolfball.lua', -- moon
-    [138363592957250] = 'hitagolfball.lua', --world
+    [10529067596] = 'hitagolfball.lua',
 }
 
 if identifyexecutor then
     local execName = tostring(identifyexecutor()):lower()
-    local UNSUPPORTED = { "unknown", "unknown" }
+    local UNSUPPORTED = { "Solara", "Xeno" }
     for _, name in ipairs(UNSUPPORTED) do
         if execName:find(name:lower(), 1, true) then
             local ok, Library = pcall(function()
@@ -31,8 +28,7 @@ if identifyexecutor then
     end
 end
 
-local file = games[game.PlaceId]
-if not file then file = games[game.GameId] end
+local file = games[game.GameId] or games[game.PlaceId]
 
 if file then
     task.wait(math.random())
@@ -41,5 +37,5 @@ if file then
     end)
     loadstring(game:HttpGet(BASE .. file))()
 else
-     game:GetService("StarterGui"):SetCore("SendNotification", {Title="ShinyHub", Text="Game not supported", Duration=5})
+    game:GetService("StarterGui"):SetCore("SendNotification", {Title="ShinyHub", Text="Game not supported", Duration=5})
 end
