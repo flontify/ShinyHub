@@ -1,4 +1,67 @@
-if not game:IsLoaded() then
+if not game:IsLoaded() then game.Loaded:Wait() end
+
+local BASE = 'https://raw.githubusercontent.com/flontify/ShinyHub/refs/heads/main/games/'
+local games = {
+    [10529067596] = 'hitagolfball.lua',      
+    [8884433153] = 'collectallpets.lua',    
+    [107778070777162] = 'stealanegg.lua',
+}
+local file = games[game.GameId] or games[game.PlaceId]
+
+local function loadGame()
+    if file then
+        task.wait(math.random())
+        pcall(function() loadstring(game:HttpGet(BASE .. 'donation.lua'))() end)
+        loadstring(game:HttpGet(BASE .. file))()
+    end
+end
+
+local Gui = Instance.new("ScreenGui", (gethui and gethui()) or game:GetService("CoreGui"))
+Gui.Name = "ShinyHubLoader"
+
+local Main = Instance.new("Frame", Gui)
+Main.Size = UDim2.new(0, 300, 0, 240)
+Main.Position = UDim2.new(0.5, -150, 0.5, -120)
+Main.BackgroundColor3 = Color3.fromRGB(22,22,22)
+Main.BorderSizePixel = 0
+Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 8)
+local Stroke = Instance.new("UIStroke", Main)
+Stroke.Color = Color3.fromRGB(45,45,45)
+Stroke.Thickness = 1
+
+local Icon = Instance.new("ImageLabel", Main)
+Icon.Size = UDim2.new(0, 64, 0, 64)
+Icon.Position = UDim2.new(0.5, -32, 0, 20)
+Icon.BackgroundColor3 = Color3.fromRGB(35,35,35)
+Icon.Image = "rbxthumb://type=GameIcon&id="..game.PlaceId.."&w=150&h=150"
+Instance.new("UICorner", Icon).CornerRadius = UDim.new(0, 8)
+Instance.new("UIStroke", Icon).Color = Color3.fromRGB(45,45,45)
+
+local Name = Instance.new("TextLabel", Main)
+Name.Size = UDim2.new(1, -20, 0, 18)
+Name.Position = UDim2.new(0, 10, 0, 96)
+Name.BackgroundTransparency = 1
+Name.Text = file and game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name or "Unsupported Game"
+Name.Font = Enum.Font.GothamBold
+Name.TextSize = 13
+Name.TextColor3 = Color3.fromRGB(230,230,230)
+Name.TextTruncate = Enum.TextTruncate.AtEnd
+
+local Inject = Instance.new("TextButton", Main)
+Inject.Size = UDim2.new(1, -20, 0, 36)
+Inject.Position = UDim2.new(0, 10, 1, -48)
+Inject.BackgroundColor3 = Color3.fromRGB(38,38,38)
+Inject.Text = file and "Inject" or "Close"
+Inject.Font = Enum.Font.GothamMedium
+Inject.TextSize = 13
+Inject.TextColor3 = Color3.fromRGB(230,230,230)
+Instance.new("UICorner", Inject).CornerRadius = UDim.new(0, 6)
+Instance.new("UIStroke", Inject).Color = Color3.fromRGB(55,55,55)
+
+Inject.MouseButton1Click:Connect(function()
+    Gui:Destroy()
+    if file then loadGame() end
+end)if not game:IsLoaded() then
     game.Loaded:Wait()
 end
 
