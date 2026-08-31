@@ -15,11 +15,11 @@ local lastBallName = nil
 local lastClubPrice = 0
 local lastClubName = nil
 
-ShinyLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/flontify/ShinyHub/refs/heads/main/lib/ShinyLib.lua"))()
+Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))()
 
 local window
 local okWin = pcall(function()
-    window = ShinyLib:CreateWindow({
+    window = Rayfield:CreateWindow({
         Name = "ShinyHub | Hit A Golf Ball",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "by you",
@@ -31,7 +31,7 @@ local okWin = pcall(function()
     })
 end)
 if not okWin or not window then
-    window = ShinyLib:CreateWindow({
+    window = Rayfield:CreateWindow({
         Name = "ShinyHub | Hit A Golf Ball",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "by you",
@@ -74,8 +74,8 @@ local function getRebirths()
 end
 
 local function sendProgress(isTest)
-    if webhookUrl == "" or webhookUrl:len() < 10 then ShinyLib:Notify({Title = "Webhook", Content = "Set your webhook URL first!", Duration = 3}) return end
-    if not webhookUrl:find("discord.com/api/webhooks") and not webhookUrl:find("discordapp.com/api/webhooks") then ShinyLib:Notify({Title = "Webhook", Content = "Invalid webhook URL", Duration = 3}) return end
+    if webhookUrl == "" or webhookUrl:len() < 10 then Rayfield:Notify({Title = "Webhook", Content = "Set your webhook URL first!", Duration = 3}) return end
+    if not webhookUrl:find("discord.com/api/webhooks") and not webhookUrl:find("discordapp.com/api/webhooks") then Rayfield:Notify({Title = "Webhook", Content = "Invalid webhook URL", Duration = 3}) return end
     local player = game:GetService("Players").LocalPlayer
     local fields = {}
     if webhookIncludeCoins then table.insert(fields, {name = "Coins", value = tostring(getCoins()), inline = true}) end
@@ -86,14 +86,14 @@ local function sendProgress(isTest)
     local payload = {username = webhookUsername ~= "" and webhookUsername or "ShinyHub", embeds = {{title = "Hit A Golf Ball - Progress", color = 0x8A2BE2, fields = fields, footer = {text = isTest and "Test webhook" or "Auto webhook"}, timestamp = DateTime.now():ToIsoDate()}}}
     local json = HttpService:JSONEncode(payload)
     local req = (http_request or request or (syn and syn.request) or (fluxus and fluxus.request) or (http and http.request))
-    if not req then ShinyLib:Notify({Title = "Webhook", Content = "Executor does not support http_request", Duration = 4}) return end
+    if not req then Rayfield:Notify({Title = "Webhook", Content = "Executor does not support http_request", Duration = 4}) return end
     local ok, res = pcall(function() return req({Url = webhookUrl, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = json}) end)
     if not ok then ok, res = pcall(function() return req({Url = webhookUrl, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = json, body = json}) end) end
     if ok and res then
         local code = res.StatusCode or res.Status or 0
-        if code == 200 or code == 204 then ShinyLib:Notify({Title = "Webhook", Content = "Sent! Coins: "..tostring(getCoins()), Duration = 2})
-        else ShinyLib:Notify({Title = "Webhook", Content = "Discord returned "..tostring(code), Duration = 4}) warn("Webhook response:", HttpService:JSONEncode(res)) end
-    else ShinyLib:Notify({Title = "Webhook", Content = "Failed - check F9", Duration = 4}) warn("Webhook error:", res) end
+        if code == 200 or code == 204 then Rayfield:Notify({Title = "Webhook", Content = "Sent! Coins: "..tostring(getCoins()), Duration = 2})
+        else Rayfield:Notify({Title = "Webhook", Content = "Discord returned "..tostring(code), Duration = 4}) warn("Webhook response:", HttpService:JSONEncode(res)) end
+    else Rayfield:Notify({Title = "Webhook", Content = "Failed - check F9", Duration = 4}) warn("Webhook error:", res) end
 end
 
 farmTab:CreateSection("Farming")
@@ -111,7 +111,7 @@ shopTab:CreateToggle({ Name = "Auto Buy Ball", CurrentValue = false, Flag = "Aut
             if coins >= v[1] then
                 if v[1] > lastBallPrice then
                     print("Last bought ball:", v[2], "Price:", v[1])
-                    ShinyLib:Notify({Title = "Ball Bought", Content = v[2].." for "..tostring(v[1]), Duration = 2})
+                    Rayfield:Notify({Title = "Ball Bought", Content = v[2].." for "..tostring(v[1]), Duration = 2})
                     game:GetService("ReplicatedStorage").GolfRemotes.BuyBall:FireServer(v[2])
                     lastBallPrice = v[1]
                     lastBallName = v[2]
@@ -131,7 +131,7 @@ shopTab:CreateToggle({ Name = "Auto Buy Club", CurrentValue = false, Flag = "Aut
             if coins >= v[1] then
                 if v[1] > lastClubPrice then
                     print("Last bought club:", v[2], "Price:", v[1])
-                    ShinyLib:Notify({Title = "Club Bought", Content = v[2].." for "..tostring(v[1]), Duration = 2})
+                    Rayfield:Notify({Title = "Club Bought", Content = v[2].." for "..tostring(v[1]), Duration = 2})
                     game:GetService("ReplicatedStorage").GolfRemotes.BuyClub:FireServer(v[2])
                     lastClubPrice = v[1]
                     lastClubName = v[2]
