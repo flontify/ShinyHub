@@ -1,5 +1,4 @@
-local HttpService = game:GetService("HttpService")
-local aClaimQuest = false
+local HttpService = game:GetService("HttpService")local aClaimQuest = false
 local aFarmSmart = false
 local aEquipBest = false
 local aBuyEgg = false
@@ -20,21 +19,14 @@ local webhookUsername = "ShinyHub"
 local lastEquippedHash = ""
 local needEquip = true
 
-local Rayfield
-pcall(function() Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() end)
-if not Rayfield and isfile and isfile("rayfield.lua") then pcall(function() Rayfield = loadstring(readfile("rayfield.lua"))() end) end
-if not Rayfield and writefile then
-    local ok, src = pcall(function() return game:HttpGet("https://sirius.menu/gen2") end)
-    if ok and src and src:len() > 1000 then pcall(function() writefile("rayfield.lua", src) end) pcall(function() Rayfield = loadstring(src)() end) end
-end
-assert(Rayfield, "Rayfield failed to load - enable Http Requests")
+ShinyLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/flontify/ShinyHub/refs/heads/main/lib/ShinyLib.lua"))()
 
 local window
 local okWin = pcall(function()
-    window = Rayfield:CreateWindow({
+    window = ShinyLib:CreateWindow({
         Name = "ShinyHub | Collect All Pets",
         LoadingTitle = "ShinyHub",
-        LoadingSubtitle = "by you",
+        LoadingSubtitle = "by flint",
         Theme = "Amoled",
         ToggleUIKeybind = "K",
         DisableRayfieldPrompts = false,
@@ -43,7 +35,7 @@ local okWin = pcall(function()
     })
 end)
 if not okWin or not window then
-    window = Rayfield:CreateWindow({
+    window = ShinyLib:CreateWindow({
         Name = "ShinyHub | Collect All Pets",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "by you",
@@ -122,17 +114,17 @@ local petsFolder = findPetsFolder()
 if petsFolder then pcall(function() petsFolder.ChildAdded:Connect(function() needEquip = true end) end) end
 
 local function sendProgress(isTest)
-    if webhookUrl == "" or webhookUrl:len() < 10 then Rayfield:Notify({Title = "Webhook", Content = "Set your webhook URL first!", Duration = 3}) return end
+    if webhookUrl == "" or webhookUrl:len() < 10 then ShinyLib:Notify({Title = "Webhook", Content = "Set your webhook URL first!", Duration = 3}) return end
     local player = game:GetService("Players").LocalPlayer
     local fields = {{name = "Player", value = player.Name, inline = true},{name = "PlaceId", value = tostring(game.PlaceId), inline = true},{name = "Area", value = tostring(getCurrentArea()), inline = true}}
     local payload = {username = webhookUsername ~= "" and webhookUsername or "ShinyHub", embeds = {{title = "Collect All Pets - Progress", color = 0x8A2BE2, fields = fields, footer = {text = isTest and "Test webhook" or "Auto webhook"}, timestamp = DateTime.now():ToIsoDate()}}}
     local json = HttpService:JSONEncode(payload)
     local req = (http_request or request or (syn and syn.request) or (fluxus and fluxus.request) or (http and http.request))
-    if not req then Rayfield:Notify({Title = "Webhook", Content = "Executor does not support http_request", Duration = 4}) return end
+    if not req then ShinyLib:Notify({Title = "Webhook", Content = "Executor does not support http_request", Duration = 4}) return end
     local ok, res = pcall(function() return req({Url = webhookUrl, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = json}) end)
     if not ok then ok, res = pcall(function() return req({Url = webhookUrl, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = json, body = json}) end) end
-    if ok and res and (res.StatusCode == 200 or res.StatusCode == 204 or res.Status == 200) then Rayfield:Notify({Title = "Webhook", Content = "Sent! Area: "..tostring(getCurrentArea()), Duration = 2})
-    else Rayfield:Notify({Title = "Webhook", Content = "Failed - check F9", Duration = 4}) warn(res) end
+    if ok and res and (res.StatusCode == 200 or res.StatusCode == 204 or res.Status == 200) then ShinyLib:Notify({Title = "Webhook", Content = "Sent! Area: "..tostring(getCurrentArea()), Duration = 2})
+    else ShinyLib:Notify({Title = "Webhook", Content = "Failed - check F9", Duration = 4}) warn(res) end
 end
 
 farmTab:CreateSection("Farming")
@@ -146,7 +138,7 @@ farmTab:CreateButton({
     Callback = function()
         local codes = {"TenTickles","Lemonade","Jam","Shortcake","SporesFillTheAirInTheGrove","TheWavesAreCrashingOnTheBeach","TheSandsAreShiftingInTheDesert","TasteTheRainbow","RebelsThinkInPink","Polychromatic","on the floor","Fortune","7up","TheresMyFavoriteLeaf","RaceAgainstTheSinkingSun","PascalsFryingPan","BagesDissonance","ThreeEtherThere","Kesculptorec","Metallicmushroom","ShinySubmarine","DayOfRecord","DayOrRecord","ToInfinity","HiHatsAndRidesOnly","DroppedDropDroppage","SeniorPlanta","DividedBy","ArcticMoon","ConcaveForward","FirstCodeEver","Buttertom_1m","Amebas","FusionIndy","Sub2PHMittens","Chocolatemilk","ChocolateMilk","Meerkat","ThenAddThis","CommonLoon","eaglenight222","Brrrrr","SecretCodeWasHere","4815162342","TreeSauce","KlausWasHere","PentaNeoSecret","PentaNeoSecrets","AddThisStep","ToTheseLogs","TheGreatCodeInTheSky","SpeedPlayzTree","Groupie","Plasmatic_Void","Plasmatic_void","BigHoleInTheWall","InvestigationWeb","Tennessee","LeftToRight","TheHunt","FromTheMachine","Erdentempel","Click","Taikatalvi","MemoryLeak","IfYouAintFirst","HorseWithNoName","Orion","TillFjalls","PillarsOfCreation","TooManyDrops","ShinyHunting","FewAndFarBetween","DuelingDragons","WhoLetTheDogsOut","ImFlying","ItsAChicken","NewCode","shipwrecked","ItsTheGrotto","FastTyper","GlitteringGold","Massproduction","Shinier","FinalForm","FFR","DuneBuggy","Mountin","ProsperousGrounds","BurgersAndFries","InfiniteLoop","SeasonsAndAMovie","AndIThinkToMyself","OneZero","MusketeersAndAmigos","OneOutOfEight","Metallic","GenAutoCalc","CrazyDiamond","Viper_Toffi","Unihorns","LookOut","MrPocket","ToPointOh","NotEnoughDrops","Ocean","Electromagnetism","Stadium","FiveNewCodes","OverEasy","TooMuchBalanceChanges","FourCrystals","StrobeLight","ThingsThatHaveWaves","SticksAndStonesAndLevers"}
         for _, code in ipairs(codes) do pcall(function() game:GetService("ReplicatedStorage").Remotes.RedeemCode:FireServer(code) end) task.wait(0.3) end
-        Rayfield:Notify({Title = "Codes", Content = "Tried "..tostring(#codes).." codes", Duration = 3})
+        ShinyLib:Notify({Title = "Codes", Content = "Tried "..tostring(#codes).." codes", Duration = 3})
     end,
 })
 
