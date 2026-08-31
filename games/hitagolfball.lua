@@ -11,8 +11,10 @@ local webhookUsername = "ShinyHub"
 local webhookIncludeCoins = true
 local webhookIncludeRebirths = true
 local webhookIncludeJobId = false
-local keepBallEquipped = true
-local keepClubEquipped = true
+local lastBallPrice = 0
+local lastBallName = nil
+local lastClubPrice = 0
+local lastClubName = nil
 
 local Rayfield
 pcall(function() Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() end)
@@ -84,22 +86,6 @@ local function getRebirths()
     return getValue({"Rebirths"}) or getValue({"leaderstats","Rebirths"}) or getValue({"Rebirth"}) or 0
 end
 
-local function getEquipped(typeName)
-    local p = game:GetService("Players").LocalPlayer
-    local tries = {"Equipped"..typeName, typeName, "Current"..typeName, "EquippedBall", "EquippedClub"}
-    for _, n in ipairs(tries) do
-        local v = p:FindFirstChild(n)
-        if v and v.Value then return v.Value end
-        if p:FindFirstChild("leaderstats") then
-            local v2 = p.leaderstats:FindFirstChild(n)
-            if v2 and v2.Value then return v2.Value end
-        end
-        local attr = p:GetAttribute(n)
-        if attr then return attr end
-    end
-    return nil
-end
-
 local function sendProgress(isTest)
     if webhookUrl == "" or webhookUrl:len() < 10 then Rayfield:Notify({Title = "Webhook", Content = "Set your webhook URL first!", Duration = 3}) return end
     if not webhookUrl:find("discord.com/api/webhooks") and not webhookUrl:find("discordapp.com/api/webhooks") then Rayfield:Notify({Title = "Webhook", Content = "Invalid webhook URL", Duration = 3}) return end
@@ -129,10 +115,46 @@ farmTab:CreateToggle({ Name = "Auto Ascend", CurrentValue = false, Flag = "AutoA
 farmTab:CreateToggle({ Name = "Auto Shoot", CurrentValue = false, Flag = "Autoshoot", Callback = function(Value) ashoot = Value if Value then task.spawn(function() while ashoot do game:GetService("ReplicatedStorage").GolfRemotes.SpawnBall:FireServer(CFrame.new(0.828187048, 4.19568777, 111.41848, 0, 0, 1, 0, 1, -0, -1, 0, -0)) task.wait(0.1) game:GetService("ReplicatedStorage").GolfRemotes.Swing:FireServer(5) task.wait(2.5) end end) end end, })
 
 shopTab:CreateSection("Auto Buy - Best Affordable")
-shopTab:CreateToggle({ Name = "Keep Ball Equipped", CurrentValue = true, Flag = "KeepBall", Callback = function(Value) keepBallEquipped = Value end, })
-shopTab:CreateToggle({ Name = "Keep Club Equipped", CurrentValue = true, Flag = "KeepClub", Callback = function(Value) keepClubEquipped = Value end, })
-shopTab:CreateToggle({ Name = "Auto Buy Ball", CurrentValue = false, Flag = "Autoball", Callback = function(Value) autoball = Value if Value then task.spawn(function() while autoball do local coins = getCoins() local oldBall = getEquipped("Ball") local remote = game:GetService("ReplicatedStorage").GolfRemotes.BuyBall local balls = {{4500000000,"Crystal"},{2100000000,"Engine"},{990000000,"Astronaut"},{460000000,"Rugby"},{220000000,"Gift"},{160000000,"Brick"},{62000000,"King"},{25000000,"Evil"},{9800000,"Burger"},{7700000,"Pumpkin"},{4800000,"Flower"},{3100000,"Donut"},{1900000,"Bank"},{1200000,"Rubiks"},{770000,"Poison"},{560000,"Pac"},{380000,"Eye"},{260000,"Bowling"},{180000,"Earth"},{120000,"Moon"},{86000,"Alien"},{59000,"FishBowl"},{45000,"Beach"},{32000,"Planet"},{23000,"Bomb"},{16000,"Apple"},{11000,"Duck"},} for _, v in ipairs(balls) do if coins >= v[1] then if v[2] ~= oldBall then remote:FireServer(v[2]) task.wait(0.3) if keepBallEquipped and oldBall and oldBall ~= v[2] then remote:FireServer(oldBall) end end break end end task.wait(5) end end) end end, })
-shopTab:CreateToggle({ Name = "Auto Buy Club", CurrentValue = false, Flag = "Autoclub", Callback = function(Value) autoclub = Value if Value then task.spawn(function() while autoclub do local coins = getCoins() local oldClub = getEquipped("Club") local clubRemote = game:GetService("ReplicatedStorage").GolfRemotes.BuyClub local clubs = {{2100000000,"Steampunk"},{990000000,"Toy"},{460000000,"Feline"},{220000000,"Gear"},{160000000,"Wood"},{62000000,"Fail"},{25000000,"Evil"},{9800000,"Mushroom"},{7700000,"Chocolate"},{4800000,"Honey"},{3100000,"Fall"},{1900000,"Flower"},{1200000,"Galactic"},{770000,"Rainbow"},{560000,"Vegetal"},{380000,"Bone"},{260000,"Duck"},{180000,"Cloud"},{120000,"Lunar"},{86000,"Alien"},{59000,"Moon"},{45000,"Cyber"},{32000,"Roblox"},{23000,"Golden"},{16000,"Crystal"},{11000,"Candy"},} for _, v in ipairs(clubs) do if coins >= v[1] then if v[2] ~= oldClub then clubRemote:FireServer(v[2]) task.wait(0.3) if keepClubEquipped and oldClub and oldClub ~= v[2] then clubRemote:FireServer(oldClub) end end break end end task.wait(5) end end) end end, })
+
+shopTab:CreateToggle({ Name = "Auto Buy Ball", CurrentValue = false, Flag = "Autoball", Callback = function(Value) autoball = Value if Value then task.spawn(function()
+    local balls = {{4500000000,"Crystal"},{2100000000,"Engine"},{990000000,"Astronaut"},{460000000,"Rugby"},{220000000,"Gift"},{160000000,"Brick"},{62000000,"King"},{25000000,"Evil"},{9800000,"Burger"},{7700000,"Pumpkin"},{4800000,"Flower"},{3100000,"Donut"},{1900000,"Bank"},{1200000,"Rubiks"},{770000,"Poison"},{560000,"Pac"},{380000,"Eye"},{260000,"Bowling"},{180000,"Earth"},{120000,"Moon"},{86000,"Alien"},{59000,"FishBowl"},{45000,"Beach"},{32000,"Planet"},{23000,"Bomb"},{16000,"Apple"},{11000,"Duck"},}
+    while autoball do
+        local coins = getCoins()
+        for _, v in ipairs(balls) do
+            if coins >= v[1] then
+                if v[1] > lastBallPrice then
+                    print("Last bought ball:", v[2], "Price:", v[1])
+                    Rayfield:Notify({Title = "Ball Bought", Content = v[2].." for "..tostring(v[1]), Duration = 2})
+                    game:GetService("ReplicatedStorage").GolfRemotes.BuyBall:FireServer(v[2])
+                    lastBallPrice = v[1]
+                    lastBallName = v[2]
+                end
+                break
+            end
+        end
+        task.wait(5)
+    end
+end) end end, })
+
+shopTab:CreateToggle({ Name = "Auto Buy Club", CurrentValue = false, Flag = "Autoclub", Callback = function(Value) autoclub = Value if Value then task.spawn(function()
+    local clubs = {{2100000000,"Steampunk"},{990000000,"Toy"},{460000000,"Feline"},{220000000,"Gear"},{160000000,"Wood"},{62000000,"Fail"},{25000000,"Evil"},{9800000,"Mushroom"},{7700000,"Chocolate"},{4800000,"Honey"},{3100000,"Fall"},{1900000,"Flower"},{1200000,"Galactic"},{770000,"Rainbow"},{560000,"Vegetal"},{380000,"Bone"},{260000,"Duck"},{180000,"Cloud"},{120000,"Lunar"},{86000,"Alien"},{59000,"Moon"},{45000,"Cyber"},{32000,"Roblox"},{23000,"Golden"},{16000,"Crystal"},{11000,"Candy"},}
+    while autoclub do
+        local coins = getCoins()
+        for _, v in ipairs(clubs) do
+            if coins >= v[1] then
+                if v[1] > lastClubPrice then
+                    print("Last bought club:", v[2], "Price:", v[1])
+                    Rayfield:Notify({Title = "Club Bought", Content = v[2].." for "..tostring(v[1]), Duration = 2})
+                    game:GetService("ReplicatedStorage").GolfRemotes.BuyClub:FireServer(v[2])
+                    lastClubPrice = v[1]
+                    lastClubName = v[2]
+                end
+                break
+            end
+        end
+        task.wait(5)
+    end
+end) end end, })
 
 discordTab:CreateSection("Discord Webhook")
 discordTab:CreateInput({ Name = "Webhook URL", PlaceholderText = "https://discord.com/api/webhooks/...", RemoveTextAfterFocusLost = false, Callback = function(Text) webhookUrl = Text end, })
