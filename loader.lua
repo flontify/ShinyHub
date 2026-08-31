@@ -6,6 +6,7 @@ local BASE = 'https://raw.githubusercontent.com/flontify/ShinyHub/refs/heads/mai
 
 local games = {
     [10529067596] = 'hitagolfball.lua',
+    [8884433153] = 'collectallpets.lua',
 }
 
 if identifyexecutor then
