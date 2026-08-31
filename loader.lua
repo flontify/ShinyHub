@@ -5,7 +5,7 @@ end
 local BASE = 'https://raw.githubusercontent.com/Flontify/ShinyHub/main/games/'
 
 local games = {
-    [123456789] = 'justgolf.lua', 
+    [138363592957250] = 'hitagolfball.lua', 
 
 }
 
