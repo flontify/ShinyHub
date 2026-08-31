@@ -1,5 +1,43 @@
-if game.PlaceId == 84637477108843 then --> Build An Ai
-    loadstring(game:HttpGet("https://pastefy.app/PhBnOAK5/raw"))()
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+
+local BASE = 'https://raw.githubusercontent.com/Flontify/ShinyHub/main/games/'
+
+local games = {
+    [123456789] = 'justgolf.lua', 
+
+}
+
+if identifyexecutor then
+    local execName = tostring(identifyexecutor()):lower()
+    local UNSUPPORTED = { "unknown", "unknown" }
+    for _, name in ipairs(UNSUPPORTED) do
+        if execName:find(name:lower(), 1, true) then
+            local ok, Library = pcall(function()
+                return loadstring(game:HttpGet("https://raw.githubusercontent.com/joustingmatch/ObsidianUltra/main/Library.lua"))()
+            end)
+            if ok and Library then
+                Library:CreateUnsupportedScreen({
+                    Title = "ShinyHub",
+                    Unsupported = UNSUPPORTED,
+                    Footer = { { Text = "https://discord.gg/qgUGqmCxb3", Copyable = true } },
+                })
+            end
+            return
+        end
+    end
+end
+
+local file = games[game.PlaceId]
+if not file then file = games[game.GameId] end
+
+if file then
+    task.wait(math.random())
+    pcall(function()
+        loadstring(game:HttpGet(BASE .. 'donation.lua'))()
+    end)
+    loadstring(game:HttpGet(BASE .. file))()
 else
-    game.Players.LocalPlayer:Kick('lowkey we dont support this but [discord coming soon]')
+     game:GetService("StarterGui"):SetCore("SendNotification", {Title="ShinyHub", Text="Game not supported", Duration=5})
 end
