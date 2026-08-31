@@ -6,9 +6,9 @@ local BASE = 'https://raw.githubusercontent.com/Flontify/ShinyHub/main/games/'
 
 local games = {
     
-    [75985787756573] = 'justgolf.lua', -- rainbow
-    [108998593243033] = 'justgolf.lua', -- moon
-    [138363592957250] = 'justgolf.lua', --world
+    [75985787756573] = 'hitagolfball.lua', -- rainbow
+    [108998593243033] = 'hitagolfball.lua', -- moon
+    [138363592957250] = 'hitagolfball.lua', --world
 }
 
 if identifyexecutor then
