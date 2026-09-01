@@ -17,7 +17,7 @@ if identifyexecutor then
                 Library:CreateUnsupportedScreen({
                     Title = "ShinyHub",
                     Unsupported = UNSUPPORTED,
-                    Footer = { { Text = "https://discord.gg/qgUGqmCxb3", Copyable = true } },
+                    Footer = { { Text = "https://discord.gg/TtH3rBCyrv", Copyable = true } },
                 })
             end
             return

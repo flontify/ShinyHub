@@ -1,4 +1,4 @@
-local HttpService = game:GetService("HttpService")local aClaimQuest = false
+﻿local HttpService = game:GetService("HttpService")local aClaimQuest = false
 local aFarmSmart = false
 local aEquipBest = false
 local aBuyEgg = false
@@ -173,3 +173,6 @@ discordTab:CreateToggle({ Name = "Auto Send", CurrentValue = false, Flag = "Auto
 discordTab:CreateSlider({ Name = "Auto Send Interval", Range = {10, 600}, Increment = 5, Suffix = "s", CurrentValue = 60, Flag = "WebhookInterval", Callback = function(Value) autoWebhookInterval = Value end, })
 discordTab:CreateButton({ Name = "Test Webhook", Callback = function() sendProgress(true) end, })
 discordTab:CreateButton({ Name = "Send Progress Now", Callback = function() sendProgress(false) end, })
+
+pcall(function() Rayfield:Notify({Title="Discord", Content="Dont forget to join the discord server https://discord.gg/TtH3rBCyrv", Duration=5}) end)
+

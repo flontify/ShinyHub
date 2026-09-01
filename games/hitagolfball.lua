@@ -1,4 +1,4 @@
-local HttpService = game:GetService("HttpService")local autoball = false 
+﻿local HttpService = game:GetService("HttpService")local autoball = false 
 local ashoot = false 
 local autoclub = false 
 local arebirth = false
@@ -165,3 +165,6 @@ discordTab:CreateSlider({ Name = "Auto Send Interval", Range = {10, 600}, Increm
 discordTab:CreateButton({ Name = "Test Webhook", Callback = function() sendProgress(true) end, })
 discordTab:CreateButton({ Name = "Send Progress Now", Callback = function() sendProgress(false) end, })
 discordTab:CreateToggle({ Name = "Auto Send", CurrentValue = false, Flag = "AutoWebhook", Callback = function(Value) autoWebhook = Value if Value then task.spawn(function() while autoWebhook do sendProgress(false) task.wait(autoWebhookInterval) end end) end end, })
+
+pcall(function() Rayfield:Notify({Title="Discord", Content="Dont forget to join the discord server https://discord.gg/TtH3rBCyrv", Duration=5}) end)
+
