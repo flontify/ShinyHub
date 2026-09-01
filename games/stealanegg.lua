@@ -100,7 +100,7 @@ local function fireAllPromptsIn(model, skipOwn)
         end
     end
 end
-Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))()
+Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() or loadfile("rayfield.lua")
 local window
 local okWin = pcall(function()
     window = Rayfield:CreateWindow({
