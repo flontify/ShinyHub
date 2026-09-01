@@ -19,7 +19,19 @@ local webhookUsername = "ShinyHub"
 local lastEquippedHash = ""
 local needEquip = true
 
-Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))()
+do
+    local ok, mod = pcall(function()
+        if loadfile then
+            local f = loadfile("rayfield")
+            if f then return f() end
+            f = loadfile("Rayfield.lua")
+            if f then return f() end
+            f = loadfile("Rayfield")
+            if f then return f() end
+        end
+    end)
+    if ok and mod then Rayfield = mod else Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() end
+end
 
 local window
 local okWin = pcall(function()

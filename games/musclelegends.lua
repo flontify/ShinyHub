@@ -10,7 +10,20 @@ local autoRep=false local autoRebirth=false local autoHatch=false local autoSell
 local startTime=os.time()
 local uniquePetsEquipped=false local omegaPetsEquipped=false
 local webhookUrl="" local autoWebhook=false local autoWebhookInterval=60 local webhookUsername="ShinyHub"
-local Rayfield=loadstring(game:HttpGet("https://sirius.menu/gen2"))()
+local Rayfield
+do
+    local ok, mod = pcall(function()
+        if loadfile then
+            local f = loadfile("rayfield")
+            if f then return f() end
+            f = loadfile("Rayfield.lua")
+            if f then return f() end
+            f = loadfile("Rayfield")
+            if f then return f() end
+        end
+    end)
+    if ok and mod then Rayfield = mod else Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() end
+end
 local Window=Rayfield:CreateWindow({Name="ShinyHub | Muscle Legends", LoadingTitle="ShinyHub", LoadingSubtitle="Muscle Legends", Theme="Default", ToggleUIKeybind="K", DisableRayfieldPrompts=false, DisableBuildWarnings=false, ConfigurationSaving={Enabled=true, FolderName="ShinyHub", FileName="Muscle Legends"}})
 local MainTab=Window:CreateTab({Name="Main", Icon="home"})
 local PetTab=Window:CreateTab({Name="Pets and Crystals", Icon="paw-print"})

@@ -51,11 +51,13 @@ local function findRemote(names)
 end
 local function fireRemote(remote, ...)
     if not remote then return end
+    local args = {...}
+    local unpackFn = table.unpack or unpack
     pcall(function()
         if remote:IsA("RemoteEvent") then
-            remote:FireServer(...)
+            remote:FireServer(unpackFn(args))
         elseif remote:IsA("RemoteFunction") then
-            remote:InvokeServer(...)
+            remote:InvokeServer(unpackFn(args))
         end
     end)
 end
@@ -100,7 +102,21 @@ local function fireAllPromptsIn(model, skipOwn)
         end
     end
 end
-Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() or loadfile("rayfield.lua")
+local _rf
+do
+    local ok, mod = pcall(function()
+        if loadfile then
+            local f = loadfile("rayfield")
+            if f then return f() end
+            f = loadfile("Rayfield.lua")
+            if f then return f() end
+            f = loadfile("Rayfield")
+            if f then return f() end
+        end
+    end)
+    if ok and mod then _rf = mod else _rf = loadstring(game:HttpGet("https://sirius.menu/gen2"))() end
+end
+Rayfield = _rf
 local window
 local okWin = pcall(function()
     window = Rayfield:CreateWindow({
