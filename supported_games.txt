@@ -1,0 +1,27 @@
+ShinyHub Supported Games (4) | https://discord.gg/TtH3rBCyrv
+Loadstring: loadstring(game:HttpGet("https://raw.githubusercontent.com/flontify/ShinyHub/refs/heads/main/loader.lua"))()
+
+1. Hit A Golf Ball [10529067596] - https://www.roblox.com/games/10529067596 - Working
+   - Farming: Auto Rebirth, Auto Ascend, Auto Shoot
+   - Shop: Auto Buy Ball (27 tiers best affordable), Auto Buy Club
+   - Webhook: Include Coins/Rebirths/JobId, Auto Send
+
+2. Collect All Pets [8884433153] - https://www.roblox.com/games/8884433153 - Working
+   - Farming: Auto Claim Quest, Auto Unlock Badges, Auto Farm Current Area, Redeem All Codes
+   - Pets: Auto Equip Best Smart, Auto Buy Egg (8 eggs), Auto Fuse Pets, Auto Buy Equip Slot/Damage/Speed/Magnet
+   - Webhook: Auto Send
+
+3. Muscle Legends [3623096087] - https://www.roblox.com/games/3623096087 - Working
+   - Main: WalkSpeed/JumpPower, Infinite Jump, Anti Fling, Lock Position, Show Pets, Walk on Water, Auto Spin Fortune Wheel, Time of Day
+   - Farming: Fast Rebirth, Ultra Strength, Hide Frames, Anti Lag, Unlock AutoLift, Auto Exercises (Weight/Pushups/Handstands/Situps/Punch), Fast Tools, Auto Eat Egg, Gym Teleports (Jungle Bench/Squat/PullUps/Boulder)
+   - Status: Client Stats Executor Time/FPS/Ping/Smoothness
+
+4. Restaurant Tycoon 3 [119048529960596] - https://www.roblox.com/games/119048529960596 - Working
+   - Home: Welcome, Copy/Join Discord, Changelogs, Set FPS, Credits
+   - Main: Auto Cook Near/TP, Instant Cook, Auto Seat Customers, Auto Take Orders, Auto Give Food, Auto Pickup Dirty Dishes, Auto Collect Bills
+   - Teleports: Your Tycoon, Plaza, Farm, EKEA
+   - Misc: Close/Open/Kick All, Auto Collect Tips, Auto Claim Daily, Debug Log, Auto Restaurant Upgrades
+   - Local Player: Infinite Jump, Fly, Noclip, FOV, Camera Zoom, WalkSpeed, JumpPower, Gravity
+   - Server: Server Hop, Join Small Server, Rejoin, Join By JobId, Copy JobId
+
+Toggle Key: K | Theme: Amoled | Rayfield Gen2 | Auto-Save Config | ShinyHub
