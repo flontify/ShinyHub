@@ -4,7 +4,6 @@ local games = {
     [10529067596] = 'hitagolfball.lua',
     [8884433153] = 'collectallpets.lua',
     [3623096087] = 'musclelegends.lua',
-    [107778070777162] = 'stealanegg.lua',
 }
 if identifyexecutor then
     local execName = tostring(identifyexecutor()):lower()
