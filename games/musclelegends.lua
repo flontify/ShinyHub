@@ -509,6 +509,6 @@ for _, loc in ipairs(gymLocs) do
         end,
     })
 end
-Notify({Title="ShinyHub", Content="Muscle Legends Rayfield loaded", Duration=3})
+Notify({Title="ShinyHub", Content="Muscle Legends loaded", Duration=3})
 
 Notify({Title="Discord", Content="Dont forget to join the discord server https://discord.gg/TtH3rBCyrv", Duration=5})
