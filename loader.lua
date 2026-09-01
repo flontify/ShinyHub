@@ -80,8 +80,8 @@ local function loadGame()
             if not src then error("HttpGet failed for "..file) end
         end
         if file == "restauranttycoon3.lua" and src and not src:find("_shinyFixPar") then
-            src = "local function _shinyFixPar(tab, data) local ok=pcall(function() tab:CreateParagraph(data) end) if not ok then pcall(function() tab:CreateLabel(data.Title..': '..data.Content) end) end end\n" .. src
-            src = src:gsub("([%w_%.]+):CreateParagraph", "_shinyFixPar(%1,")
+            src = "local function _shinyFixPar(tab, data) local ok=pcall(function() tab:CreateParagraph(data) end); if not ok then pcall(function() tab:CreateLabel(data.Title..': '..data.Content) end) end end\n" .. src
+            src = src:gsub("([%w_%.]+):CreateParagraph%s*%(", "_shinyFixPar(%1, ")
         end
         local fn, lerr = safeLoadString(src, file)
         if not fn then error(lerr or "loadstring failed") end
