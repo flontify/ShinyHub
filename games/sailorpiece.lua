@@ -70,7 +70,7 @@ local function createSymbioteShim(gameName)
                 Name = displayName,
                 LoadingTitle = "ShinyHub",
                 LoadingSubtitle = gameName,
-                Theme = "Amoled",
+                Theme = "Default",
                 ToggleUIKeybind = "K",
                 DisableRayfieldPrompts = false,
                 DisableBuildWarnings = false,
@@ -208,12 +208,26 @@ local function createSymbioteShim(gameName)
 
                 return { Set = function() end }
             end
+            function TabObj:AddColorPicker(cName, color, callback)
+                if type(callback) ~= "function" then callback = function() end end
+                local flag = (cName .. "_" .. name):gsub("%s+","_")
+                pcall(function()
+                    tab:CreateColorPicker({
+                        Name = cName,
+                        Color = color,
+                        Flag = flag,
+                        Callback = function(v) pcall(callback, v) end
+                    })
+                end)
+                return { Set = function() end }
+            end
             TabObj.AddToggle = TabObj.AddToggle
             TabObj.AddSlider = TabObj.AddSlider
             TabObj.AddDropdown = TabObj.AddDropdown
             TabObj.AddSeparator = TabObj.AddSeparator
             TabObj.AddLabel = TabObj.AddLabel
             TabObj.AddButton = TabObj.AddButton
+            TabObj.AddColorPicker = TabObj.AddColorPicker
             return TabObj
         end
         return WindowObj

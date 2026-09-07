@@ -1,4 +1,4 @@
-if not game:IsLoaded() then game.Loaded:Wait() end
+﻿if not game:IsLoaded() then game.Loaded:Wait() end
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 local UserInputService = game:GetService("UserInputService")
@@ -33,7 +33,7 @@ local okWin = pcall(function()
         Name = "ShinyHub | Muscle Legends",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "by flint",
-        Theme = "Amoled",
+        Theme = "Default",
         ToggleUIKeybind = "K",
         DisableRayfieldPrompts = false,
         DisableBuildWarnings = false,
@@ -99,7 +99,7 @@ end)
 task.spawn(function()
     while task.wait(0.3) do
         local fps = workspace:GetRealPhysicsFPS()
-        local s = fps>=55 and "Very Smooth 🟢" or fps>=40 and "Smooth 🟡" or fps>=25 and "Laggy 🟠" or "Very Laggy 🔴"
+        local s = fps>=55 and "Very Smooth ðŸŸ¢" or fps>=40 and "Smooth ðŸŸ¡" or fps>=25 and "Laggy ðŸŸ " or "Very Laggy ðŸ”´"
         pcall(function() smoothLabel:SetText("Smoothness: " .. s) end)
     end
 end)

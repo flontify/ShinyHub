@@ -1,4 +1,4 @@
-if not game:IsLoaded() then game.Loaded:Wait() end
+﻿if not game:IsLoaded() then game.Loaded:Wait() end
 local Players = game:GetService("Players")
 local VirtualUser = game:GetService("VirtualUser")
 local UserInputService = game:GetService("UserInputService")
@@ -41,7 +41,7 @@ local okWin = pcall(function()
         Name = "ShinyHub | Restaurant Tycoon 3",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "Restaurant Tycoon 3",
-        Theme = "Amoled",
+        Theme = "Default",
         ToggleUIKeybind = "K",
         DisableRayfieldPrompts = false,
         DisableBuildWarnings = false,
