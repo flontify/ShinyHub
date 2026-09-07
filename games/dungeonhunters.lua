@@ -97,7 +97,7 @@ local function createSymbioteShim(gameName)
             local TabObj = {}
             TabObj._ray = tab
             TabObj._window = window
-            function TabObj:AddToggle(tName, callback, default)
+                        function TabObj:AddToggle(tName, callback, default)
                 if type(callback) ~= "function" and type(default) == "function" then
                     local tmp = callback
                     callback = default
@@ -106,16 +106,30 @@ local function createSymbioteShim(gameName)
                 if type(default) ~= "boolean" then default = false end
                 if type(callback) ~= "function" then callback = function() end end
                 local flag = (tName .. "_" .. name):gsub("%s+","_")
-                local ok2, _ = pcall(function()
-                    return tab:CreateToggle({
+                local toggleObj
+                pcall(function()
+                    toggleObj = tab:CreateToggle({
                         Name = tName,
                         CurrentValue = default,
                         Flag = flag,
                         Callback = function(v) pcall(callback, v) end
-
                     })
                 end)
-                return { Set = function() end, SetValue=function() end }
+                local function setToggle(v)
+                    if toggleObj then
+                        pcall(function()
+                            if toggleObj.Set then toggleObj:Set(v)
+                            elseif toggleObj.SetValue then toggleObj:SetValue(v)
+                            end
+                        end)
+                    end
+                end
+                return {
+                    Set = setToggle,
+                    SetValue = setToggle,
+                    SetState = setToggle,
+                    SetEnabled = setToggle
+                }
             end
             function TabObj:AddSlider(sName, min, max, def, callback)
                 if type(callback) ~= "function" then callback = function() end end
