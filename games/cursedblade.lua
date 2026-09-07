@@ -181,7 +181,7 @@ local function createSymbioteShim(gameName)
                     end)
                 end
                 function obj:Clear() self:ClearSelection() end
-                function obj:Set(...) pcall(function() if dd and dd.Set then dd:Set(...) end end) end
+                function obj:Set(...) local args={...}; pcall(function() if dd and dd.Set then dd:Set(table.unpack(args)) end end) end
                 return obj
             end
             function TabObj:AddSeparator()
