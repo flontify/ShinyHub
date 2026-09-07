@@ -1,4 +1,4 @@
-local HttpService = game:GetService("HttpService")local autoball = false 
+﻿local HttpService = game:GetService("HttpService")local autoball = false 
 local ashoot = false 
 local autoclub = false 
 local arebirth = false
@@ -15,7 +15,19 @@ local lastBallName = nil
 local lastClubPrice = 0
 local lastClubName = nil
 
-Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))()
+do
+    local ok, mod = pcall(function()
+        if loadfile then
+            local f = loadfile("rayfield")
+            if f then return f() end
+            f = loadfile("Rayfield.lua")
+            if f then return f() end
+            f = loadfile("Rayfield")
+            if f then return f() end
+        end
+    end)
+    if ok and mod then Rayfield = mod else Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() end
+end
 
 local window
 local okWin = pcall(function()
@@ -23,7 +35,7 @@ local okWin = pcall(function()
         Name = "ShinyHub | Hit A Golf Ball",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "by you",
-        Theme = "Amoled",
+        Theme = "Default",
         ToggleUIKeybind = "K",
         DisableRayfieldPrompts = false,
         DisableBuildWarnings = false,
@@ -153,3 +165,6 @@ discordTab:CreateSlider({ Name = "Auto Send Interval", Range = {10, 600}, Increm
 discordTab:CreateButton({ Name = "Test Webhook", Callback = function() sendProgress(true) end, })
 discordTab:CreateButton({ Name = "Send Progress Now", Callback = function() sendProgress(false) end, })
 discordTab:CreateToggle({ Name = "Auto Send", CurrentValue = false, Flag = "AutoWebhook", Callback = function(Value) autoWebhook = Value if Value then task.spawn(function() while autoWebhook do sendProgress(false) task.wait(autoWebhookInterval) end end) end end, })
+
+pcall(function() Rayfield:Notify({Title="Discord", Content="Dont forget to join the discord server https://discord.gg/TtH3rBCyrv", Duration=5}) end)
+

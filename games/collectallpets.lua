@@ -1,4 +1,4 @@
-local HttpService = game:GetService("HttpService")local aClaimQuest = false
+﻿local HttpService = game:GetService("HttpService")local aClaimQuest = false
 local aFarmSmart = false
 local aEquipBest = false
 local aBuyEgg = false
@@ -19,7 +19,19 @@ local webhookUsername = "ShinyHub"
 local lastEquippedHash = ""
 local needEquip = true
 
-Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))()
+do
+    local ok, mod = pcall(function()
+        if loadfile then
+            local f = loadfile("rayfield")
+            if f then return f() end
+            f = loadfile("Rayfield.lua")
+            if f then return f() end
+            f = loadfile("Rayfield")
+            if f then return f() end
+        end
+    end)
+    if ok and mod then Rayfield = mod else Rayfield = loadstring(game:HttpGet("https://sirius.menu/gen2"))() end
+end
 
 local window
 local okWin = pcall(function()
@@ -27,7 +39,7 @@ local okWin = pcall(function()
         Name = "ShinyHub | Collect All Pets",
         LoadingTitle = "ShinyHub",
         LoadingSubtitle = "by flint",
-        Theme = "Amoled",
+        Theme = "Default",
         ToggleUIKeybind = "K",
         DisableRayfieldPrompts = false,
         DisableBuildWarnings = false,
@@ -161,3 +173,6 @@ discordTab:CreateToggle({ Name = "Auto Send", CurrentValue = false, Flag = "Auto
 discordTab:CreateSlider({ Name = "Auto Send Interval", Range = {10, 600}, Increment = 5, Suffix = "s", CurrentValue = 60, Flag = "WebhookInterval", Callback = function(Value) autoWebhookInterval = Value end, })
 discordTab:CreateButton({ Name = "Test Webhook", Callback = function() sendProgress(true) end, })
 discordTab:CreateButton({ Name = "Send Progress Now", Callback = function() sendProgress(false) end, })
+
+pcall(function() Rayfield:Notify({Title="Discord", Content="Dont forget to join the discord server https://discord.gg/TtH3rBCyrv", Duration=5}) end)
+
