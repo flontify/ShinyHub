@@ -1,4 +1,4 @@
-ShinyHub Supported Games (4) | https://discord.gg/TtH3rBCyrv
+ShinyHub Supported Games (21) | https://discord.gg/TtH3rBCyrv
 Loadstring: loadstring(game:HttpGet("https://raw.githubusercontent.com/flontify/ShinyHub/refs/heads/main/loader.lua"))()
 
 1. Hit A Golf Ball [10529067596] - https://www.roblox.com/games/10529067596 - Working
@@ -23,5 +23,85 @@ Loadstring: loadstring(game:HttpGet("https://raw.githubusercontent.com/flontify/
    - Misc: Close/Open/Kick All, Auto Collect Tips, Auto Claim Daily, Debug Log, Auto Restaurant Upgrades
    - Local Player: Infinite Jump, Fly, Noclip, FOV, Camera Zoom, WalkSpeed, JumpPower, Gravity
    - Server: Server Hop, Join Small Server, Rejoin, Join By JobId, Copy JobId
+
+5. Be a Brainrot [105626692504093] - https://www.roblox.com/games/105626692504093 - Working
+   - Player: WalkSpeed, Jump Height, Fly, Fly Speed | Auto Upgrade Speed, Auto Rebirth, Auto Sell All Brainrots, Auto Collect Cash
+   - Auto Farm: Brainrot/Mutation/Rarity filters, VIP User, Auto Farm (Steal & Deposit)
+
+6. Cursed Blade [112107733863518] - https://www.roblox.com/games/112107733863518 - Working
+   - Player: WalkSpeed, Fly, Infinite Jump, Laggy Run, NoClip, CTRL+Click TP
+   - Auto Farm: Auto Collect, Auto Hit All, Auto Sell (All), TP To Mobs Top
+
+7. Elementalism [11337633120] - https://www.roblox.com/games/11337633120 - Working
+   - Player: Fly, NoClip, No Ragdoll & Stun, No Dash CD, Walk Speed, Laggy Run, Infinite Jump, Auto Eat, TP Safe If Knocked
+   - Auto Farm: Auto Farm, Auto Farm Boss, Meditate If No Target, Auto Skill, Farm Tween/Skill CD, Teleport To NPC/Place
+   - Various: Auto Collect, Service NPC ESP, Player ESP/ESP Lines, Show ECM/Equipment/Location
+   - PVP: Orbit Player, Spectate, Lock Camera, TP Behind While Orbit, Auto Equip Weapon
+
+8. Survive Zombie Arena [114204398207377] - https://www.roblox.com/games/114204398207377 - Working
+   - Auto Kill: Auto Hit All Zombies (GunHit remote)
+   - Player: WalkSpeed, Jump Height, Fly, Fly Speed
+
+9. Swing Obby for Brainrots [114640202062357] - https://www.roblox.com/games/114640202062357 - Working
+   - Player: WalkSpeed, Jump Height, Fly, Fly Speed | Auto Upgrade Speed, Auto Rebirth, Auto Sell All Brainrots, Auto Collect Cash
+   - Auto Farm: Brainrot/Mutation/Rarity filters, VIP User, Auto Farm
+
+10. Booga Booga [11729688377] - https://www.roblox.com/games/11729688377 - Working
+    - Player: WalkSpeed, Laggy Run, NoClip, Water Walker, Mountain Climber, Follow Nearest Player, Full Bright
+    - Combat: Kill Aura, Auto Hit Nearby Mobs/Resources/Structures, Auto Voodoo, Aimlock
+    - Farming: Auto Harvest/Plant, Auto Place Plant Box, Auto Drop, Auto Collect Chest, Auto Heal, Auto Press Coin
+    - ESP: Players, Armor, Lines, God, Nodes, Item, Meteor, Merchant
+    - Teleports: Dock/Hut Nearest Player, Auto Farm Loops
+
+11. Dungeon Hunters [120217704230083] - https://www.roblox.com/games/120217704230083 - Working
+    - Player: WalkSpeed, Fly, NoClip, Infinite Jump, Laggy Run, CTRL+Click TP
+    - Auto Farm: Auto Farm, Auto Enter Area, Auto Switch Weapons, Auto Skill
+
+12. Be a Lucky Block [124473577469410] - https://www.roblox.com/games/124473577469410 - Working
+    - Player: WalkSpeed, Fly, NoClip, Avoid Boss Catching
+    - Auto Farm: Auto Farm, Auto Farm Easter Egg, Auto Collect Cash, Auto Rebirth, Auto Sell, Auto Upgrade Speed
+
+13. Attack on Titan Revolution [13379208636] - https://www.roblox.com/games/13379208636 - Working
+    - Player: WalkSpeed, Laggy Run, NoClip, Infinite Jump, CTRL+Click TP, Titan ESP, Expand Nape Hitbox, Visualize Hitbox
+    - Combat: Auto Farm, Kill Without TP, Delay To Kill, Auto Execute/Refill/Reload/Retry, Change Cursor
+
+14. Bike Obby for Brainrots [136919941417380] - https://www.roblox.com/games/136919941417380 - Working
+    - Player: WalkSpeed, JumpPower, Fly, Fly Speed
+    - Auto Farm: Brainrot/Mutation/Rarity filters, Carry Limit, Auto Farm | Auto Collect Cash, Auto Rebirth, Auto Upgrade Speed/Jump
+
+15. RIVALS [17625359962] - https://www.roblox.com/games/17625359962 - Working
+    - Player: WalkSpeed, Fly, Noclip
+    - Combat: Aimbot, Silent Aim, Bunny Hop, Trigger Bot, Auto Fire, Team/Visible Check, Show FOV
+    - Visuals: ESP Box/Chams/Lines/Outline/Skeleton, Rainbow Mode
+
+16. Blox Fruits [2753915549] - https://www.roblox.com/games/2753915549 - Working
+    - Player: Fly, NoClip, Infinite Jump, CTRL+Click TP, Walk Speed, Laggy Run, Kill Aura, Infinite Stamina, Auto Haki/Instinct, Water Walking, Anti AFK
+    - Auto Farm: Auto Farm, Nearby NPCs, Boss, Nearby Bosses, Level, Bring NPCs, Magnet NPCs, Elite Hunter Quest/Kill
+    - Various: Service NPC/Fruit ESP, Auto Stats/Collect Chest/Buddha/Skill/Store/Roll, Bring NPCs
+    - Raids: Auto Raid, Start Raid, Go Lab, Bring NPCs
+    - Sea Event: Auto Find Sea Event/Mirage/Prehistoric/Shipwreck/Kitsune, Auto Kill, Buy Boat, Noclip Boat, Reset If Sinks
+    - PVP: ESP Players/Lines, Kill Aura, TP Behind Orbit, Aimlock/Aimbot, Lock Camera
+
+17. Black Grimoire [4632627223] - https://www.roblox.com/games/4632627223 - Working
+    - Player: Fly, NoClip, Walk Speed, Laggy Run, Lock Camera, TP Behind Orbit, Full Bright, No Fog
+    - Auto Farm: Auto Farm, Auto Farm Boss, Auto Activate Grimoire, Auto Skill, CTRL+Click TP
+    - Visuals: Service NPC ESP, ESP Players/Lines
+
+18. Sailor Piece [77747658251236] - https://www.roblox.com/games/77747658251236 - Working
+    - Player: Fly, NoClip
+    - Auto Farm: Auto Farm, Auto Farm Boss, Auto Farm Worlds, Auto Ascend, Auto Boss Spawn, Auto Skill/Stat/Haki/Observation, Auto Find & Farm SeaBeasts, Egg & Map Piece ESP, Kill Aura, Service NPC ESP
+
+19. Kick a Lucky Block [89469502395769] - https://www.roblox.com/games/89469502395769 - Working
+    - Auto Farm: Auto Farm (Kick → Run → Collect), Auto Collect Cash, Auto Rebirth, Auto Upgrade Speed
+    - Player: WalkSpeed, Jump Height, Fly, Fly Speed, Teleport To Player (dropdown)
+
+20. One Tap [90568084448279] - https://www.roblox.com/games/90568084448279 - Working
+    - Player: WalkSpeed, Fly, Noclip, Bunny Hop
+    - Combat: Aimbot, Silent Aim, Hitbox Expand, Visualize Hitbox, Show FOV, Visible Check
+    - ESP: Box, Lines, Names, Outline, Rainbow Mode
+
+21. Catch And Tame [96645548064314] - https://www.roblox.com/games/96645548064314 - Working
+    - Player: WalkSpeed, Jump Height, Fly, Fly Speed, Noclip, Teleport To Place/Player
+    - Auto Farm: Auto Farm (with travel if no target), Auto Fish, Auto Dig, Auto Collect Cash, Filters: Animals/Mutation/Rarity
 
 Toggle Key: K | Theme: Amoled | Rayfield Gen2 | Auto-Save Config | ShinyHub

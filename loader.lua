@@ -1,3 +1,4 @@
+-- if you skid give credit, its open source for a reason - discord.gg/TtH3rBCyrv
 if not game:IsLoaded() then game.Loaded:Wait() end
 local BASE = 'https://raw.githubusercontent.com/flontify/ShinyHub/refs/heads/main/games/'
 local games = {
@@ -5,6 +6,40 @@ local games = {
     [8884433153] = 'collectallpets.lua',
     [3623096087] = 'musclelegends.lua',
     [119048529960596] = 'restauranttycoon3.lua',
+    [105626692504093] = 'beabrainrot.lua',
+    [9875383684] = 'beabrainrot.lua',
+    [112107733863518] = 'cursedblade.lua',
+    [9501409571] = 'cursedblade.lua',
+    [11337633120] = 'elementalism.lua',
+    [4037244007] = 'elementalism.lua',
+    [114204398207377] = 'survivezombiearena.lua',
+    [9348272796] = 'survivezombiearena.lua',
+    [114640202062357] = 'swingobbyforbrainrots.lua',
+    [9753814298] = 'swingobbyforbrainrots.lua',
+    [11729688377] = 'boogabooga.lua',
+    [4154513353] = 'boogabooga.lua',
+    [120217704230083] = 'dungeonhunters.lua',
+    [8937254139] = 'dungeonhunters.lua',
+    [124473577469410] = 'bealuckyblock.lua',
+    [9787206684] = 'bealuckyblock.lua',
+    [13379208636] = 'attackontitanrevolution.lua',
+    [4658598196] = 'attackontitanrevolution.lua',
+    [136919941417380] = 'bikeobbyforbrainrots.lua',
+    [9934614409] = 'bikeobbyforbrainrots.lua',
+    [17625359962] = 'rivals.lua',
+    [6035872082] = 'rivals.lua',
+    [2753915549] = 'bloxfruits.lua',
+    [994732206] = 'bloxfruits.lua',
+    [4632627223] = 'blackgrimoire.lua',
+    [1522593851] = 'blackgrimoire.lua',
+    [77747658251236] = 'sailorpiece.lua',
+    [9186719164] = 'sailorpiece.lua',
+    [89469502395769] = 'kickaluckyblock.lua',
+    [10004244222] = 'kickaluckyblock.lua',
+    [90568084448279] = 'onetap.lua',
+    [9294074907] = 'onetap.lua',
+    [96645548064314] = 'catchandtame.lua',
+    [9091133975] = 'catchandtame.lua',
 }
 if identifyexecutor then
     local execName = tostring(identifyexecutor()):lower()
