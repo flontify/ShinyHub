@@ -97,25 +97,39 @@ local function createSymbioteShim(gameName)
             local TabObj = {}
             TabObj._ray = tab
             TabObj._window = window
-            function TabObj:AddToggle(tName, callback, default)
+                        function TabObj:AddToggle(tName, callback, default)
                 if type(callback) ~= "function" and type(default) == "function" then
                     local tmp = callback
                     callback = default
                     default = tmp
                 end
                 if type(default) ~= "boolean" then default = false end
-
                 if type(callback) ~= "function" then callback = function() end end
                 local flag = (tName .. "_" .. name):gsub("%s+","_")
-                local ok2, _ = pcall(function()
-                    return tab:CreateToggle({
+                local toggleObj
+                pcall(function()
+                    toggleObj = tab:CreateToggle({
                         Name = tName,
                         CurrentValue = default,
                         Flag = flag,
                         Callback = function(v) pcall(callback, v) end
                     })
                 end)
-                return { Set = function() end, SetValue=function() end }
+                local function setToggle(v)
+                    if toggleObj then
+                        pcall(function()
+                            if toggleObj.Set then toggleObj:Set(v)
+                            elseif toggleObj.SetValue then toggleObj:SetValue(v)
+                            end
+                        end)
+                    end
+                end
+                return {
+                    Set = setToggle,
+                    SetValue = setToggle,
+                    SetState = setToggle,
+                    SetEnabled = setToggle
+                }
             end
             function TabObj:AddSlider(sName, min, max, def, callback)
                 if type(callback) ~= "function" then callback = function() end end
@@ -614,7 +628,13 @@ local skeletonDef = {
 local SKELETON_COUNT = #skeletonDef
 
 local function newLine(color, thickness)
-    local l = Drawing.new("Line")
+    if not Drawing or not Drawing.new then
+        return {Visible=false, Color=color or Color3.new(1,0,0), Thickness=thickness or 1, Transparency=1, From=Vector2.new(0,0), To=Vector2.new(0,0), Remove=function() end}
+    end
+    local ok, l = pcall(function() return Drawing.new("Line") end)
+    if not ok or not l then
+        return {Visible=false, Color=color or Color3.new(1,0,0), Thickness=thickness or 1, Transparency=1, From=Vector2.new(0,0), To=Vector2.new(0,0), Remove=function() end}
+    end
     l.Visible = false
     l.Color = color or Color3.new(1, 0, 0)
     l.Thickness = thickness or 1
@@ -1059,14 +1079,24 @@ local function updateESPDrawings(char, d, anyESP, myChar)
     end
 end
 
-local silentFovCircle = Drawing.new("Circle")
-silentFovCircle.Visible = false
-silentFovCircle.Thickness = 2
-silentFovCircle.Color = FOV_DEFAULT_COLOR
-silentFovCircle.Filled = false
-silentFovCircle.Transparency = 0.8
-silentFovCircle.Radius = 1
-silentFovCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+local silentFovCircle
+if Drawing and Drawing.new then
+    local ok, c = pcall(function() return Drawing.new("Circle") end)
+    if ok and c then
+        silentFovCircle = c
+        silentFovCircle.Visible = false
+        silentFovCircle.Thickness = 2
+        silentFovCircle.Color = FOV_DEFAULT_COLOR
+        silentFovCircle.Filled = false
+        silentFovCircle.Transparency = 0.8
+        silentFovCircle.Radius = 1
+        silentFovCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+    else
+        silentFovCircle = {Visible=false, Radius=1, Position=Vector2.new(0,0), Color=FOV_DEFAULT_COLOR, Thickness=2, Transparency=0.8}
+    end
+else
+    silentFovCircle = {Visible=false, Radius=1, Position=Vector2.new(0,0), Color=FOV_DEFAULT_COLOR, Thickness=2, Transparency=0.8}
+end
 
 lplr.CharacterAdded:Connect(function()
     silentAimTarget = nil
@@ -1112,11 +1142,6 @@ task.defer(function()
     aimbotToggle = AimbotTab:AddToggle("Aimbot", function(state)
         task.wait(0.15)
         cfg.Aimbot_Enabled = state
-        if state and cfg.SilentAim_Enabled then
-            cfg.SilentAim_Enabled = false
-            cfg.SilentAim_ShowFOV = false
-            if silentAimToggle then silentAimToggle:SetState(false) end
-        end
     end, false)
 
     AimbotTab:AddSeparator()
@@ -1128,11 +1153,6 @@ task.defer(function()
     silentAimToggle = SilentAimTab:AddToggle("Silent Aim", function(state)
         task.wait(0.15)
         cfg.SilentAim_Enabled = state
-        if state and cfg.Aimbot_Enabled then
-            cfg.Aimbot_Enabled = false
-            if aimbotToggle then aimbotToggle:SetState(false) end
-        end
-
         if not state then silentAimTarget = nil end
     end, false)
     SilentAimTab:AddToggle("Auto Fire", function(s) cfg.SilentAim_AutoFire = s end, true)
@@ -1158,8 +1178,9 @@ task.defer(function()
 
     local function buildAll()
         for _, p in ipairs(players_c:GetPlayers()) do
-            if p ~= lplr and p.Character and isAlive(p.Character) and not espData[p.Character] then
-                buildESP(p, p.Character)
+            if p ~= lplr and p.Character and not espData[p.Character] then
+                -- try to build even if not yet alive, render will hide if dead
+                pcall(function() buildESP(p, p.Character) end)
             end
         end
     end
@@ -1573,12 +1594,26 @@ local function onCharAdded(char)
     task.delay(1, function()
         if not char or not char.Parent then return end
         local plr = players_c:GetPlayerFromCharacter(char)
-        if plr and plr ~= lplr and isAlive(char) then
+        if plr and plr ~= lplr then
             local anyESP = cfg.ESP_Enabled or cfg.ESP_Chams or cfg.ESP_Box or cfg.ESP_Lines or cfg.ESP_Skeleton
-            if anyESP then buildESP(plr, char) end
+            if anyESP then pcall(function() buildESP(plr, char) end) end
         end
     end)
 end
+-- periodic check for any missing ESP (fixes ESP not showing if toggled before char loaded)
+task.spawn(function()
+    while true do
+        task.wait(2)
+        local anyESP = cfg.ESP_Enabled or cfg.ESP_Chams or cfg.ESP_Box or cfg.ESP_Lines or cfg.ESP_Skeleton
+        if anyESP then
+            for _, p in ipairs(players_c:GetPlayers()) do
+                if p ~= lplr and p.Character and not espData[p.Character] then
+                    pcall(function() buildESP(p, p.Character) end)
+                end
+            end
+        end
+    end
+end)
 
 task.spawn(function()
     task.wait(2)
